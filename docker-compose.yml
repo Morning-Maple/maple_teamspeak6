@@ -1,0 +1,16 @@
+services:
+  teamspeak:
+    image: teamspeaksystems/teamspeak6-server:latest
+    container_name: teamspeak-server
+    restart: unless-stopped
+    ports:
+      - "9987:9987/udp"    # 语音
+      - "30033:30033/tcp"  # 文件传输
+    environment:
+      - TSSERVER_LICENSE_ACCEPTED=accept
+    volumes:
+      - teamspeak-data:/var/tsserver
+
+volumes:
+  teamspeak-data:
+    name: teamspeak-data

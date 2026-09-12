@@ -1,0 +1,8 @@
+# TeamSpeak 6 运行时凭据（禁止入库）
+*.key
+*.dat
+*.log
+logs/
+crashdumps/
+licensekey.dat
+serveradmin_credentials.txt
