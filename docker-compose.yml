@@ -10,6 +10,11 @@ services:
       - TSSERVER_LICENSE_ACCEPTED=accept
     volumes:
       - teamspeak-data:/var/tsserver
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
 
 volumes:
   teamspeak-data:
