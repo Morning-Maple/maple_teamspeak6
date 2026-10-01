@@ -63,6 +63,28 @@ sudo ufw allow 30033/tcp comment 'TS6 File Transfer'
 docker compose pull && docker compose up -d
 ```
 
+## 重要：Beta 许可每 2 个月过期
+
+TeamSpeak 6 服务端内置一个 32 槽位的 **Beta 默认许可**，该许可**内置于服务端版本中**，有效期约 2 个月。许可过期后，服务端会拒绝启动并不断重启（`Restarting`），日志中出现：
+
+```
+CRITICAL|Accounting | The default license has expired. Please use the latest server version.
+```
+
+此时**必须更新到最新版本**才能恢复（旧版本的许可无法续期，也不能购买更大的许可）：
+
+```bash
+docker compose pull && docker compose up -d
+```
+
+> 注意：`restart: unless-stopped` 只会重启同一个旧容器，**不会自动拉取新镜像**。因此许可过期后，容器会陷入无限重启（每 60 秒重试一次），需手动执行上面的更新命令。数据保存在 `teamspeak-data` 卷中，更新不会丢失配置。
+
+可随时在日志中确认当前许可的有效期：
+
+```bash
+docker compose logs | grep -E 'starting date|ending date|max slots'
+```
+
 ## 参考
 
 - 官方仓库：[teamspeak/teamspeak6-server](https://github.com/teamspeak/teamspeak6-server)
